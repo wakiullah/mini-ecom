@@ -1,9 +1,12 @@
 import React, { useContext } from 'react'
 import Modal from './UI/Modal'
 import UserProgressContex from '../Store/UserProgressContext'
+import CartContext from '../Store/CartContext'
 
 export default function Cart() {
     const { progress, hideCart } = useContext(UserProgressContex)
+    const { items } = useContext(CartContext)
+
     const hideCartPopupHandler = () => {
 
         hideCart()
@@ -13,7 +16,7 @@ export default function Cart() {
         <Modal open={progress === '' ? false : true}>
             <div
                 className="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]">
-                <div className="w-full max-w-lg bg-white shadow-lg rounded-3xl p-6 relative">
+                <div className="w-full max-w-xl bg-white shadow-lg rounded-3xl p-6 relative">
                     <svg onClick={hideCartPopupHandler} xmlns="http://www.w3.org/2000/svg"
                         className="w-3.5 cursor-pointer shrink-0 fill-gray-400 hover:fill-red-500 float-right" viewBox="0 0 320.591 320.591">
                         <path
@@ -27,68 +30,31 @@ export default function Cart() {
                     <h4 className="text-base font-bold text-gray-800 mt-6">3 Items</h4>
 
                     <div className="space-y-4 mt-6">
-                        <div className="flex flex-wrap items-center justify-between gap-4">
-                            <div className="flex items-center">
-                                <img src='https://readymadeui.com/product_img_2.webp' className="w-16 h-16 p-2 shrink-0 bg-gray-200 rounded-md" />
-                                <div className="ml-4">
-                                    <p className="text-sm text-gray-800">Black T-Shirt</p>
-                                    <p className="text-gray-500 text-xs mt-1">1 Item</p>
+                        {items.map((item, i) => (
+                            <div key={i} className="flex flex-wrap items-center justify-between gap-4">
+                                <div className="flex items-center">
+                                    <img src={item.images[0]} className="w-16 h-16 p-2 shrink-0 bg-gray-200 rounded-md" />
+                                    <div className="ml-4">
+                                        <p className="text-sm text-gray-800">{item.title}</p>
+                                        <p className="text-gray-500 text-xs mt-1">{item.quantity} Item</p>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="flex items-center">
-                                <span className="text-base font-bold text-gray-800 mr-4">$59.50</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="w-[18px] fill-red-500 inline cursor-pointer" viewBox="0 0 24 24">
-                                    <path
-                                        d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
-                                        data-original="#000000"></path>
-                                    <path d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
-                                        data-original="#000000"></path>
-                                </svg>
-                            </div>
-                        </div>
+                                <div className="flex items-center">
+                                    <span className="text-base  text-gray-800 mr-4">${item.price}</span>
+                                    <span className="text-base font-bold text-gray-800 mr-4">${item.price * item.quantity}</span>
 
-                        <div className="flex flex-wrap items-center justify-between gap-4">
-                            <div className="flex items-center">
-                                <img src='https://readymadeui.com/product_img_1.webp' className="w-16 h-16 p-2 shrink-0 bg-gray-200 rounded-md" />
-                                <div className="ml-4">
-                                    <p className="text-sm text-gray-800">Light Gray T-Shirt</p>
-                                    <p className="text-gray-500 text-xs mt-1">1 Item</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-[18px] fill-red-500 inline cursor-pointer" viewBox="0 0 24 24">
+                                        <path
+                                            d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
+                                            data-original="#000000"></path>
+                                        <path d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
+                                            data-original="#000000"></path>
+                                    </svg>
                                 </div>
-                            </div>
+                            </div>))}
 
-                            <div className="flex items-center">
-                                <span className="text-base font-bold text-gray-800 mr-4">$60.99</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="w-[18px] fill-red-500 inline cursor-pointer" viewBox="0 0 24 24">
-                                    <path
-                                        d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
-                                        data-original="#000000"></path>
-                                    <path d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
-                                        data-original="#000000"></path>
-                                </svg>
-                            </div>
-                        </div>
 
-                        <div className="flex flex-wrap items-center justify-between gap-4">
-                            <div className="flex items-center">
-                                <img src='https://readymadeui.com/product_img_2.webp' className="w-16 h-16 p-2 shrink-0 bg-gray-200 rounded-md" />
-                                <div className="ml-4">
-                                    <p className="text-sm text-gray-800">Black T-Shirt</p>
-                                    <p className="text-gray-500 text-xs mt-1">1 Item</p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center">
-                                <span className="text-base font-bold text-gray-800 mr-4">$50.00</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="w-[18px] fill-red-500 inline cursor-pointer" viewBox="0 0 24 24">
-                                    <path
-                                        d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
-                                        data-original="#000000"></path>
-                                    <path d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
-                                        data-original="#000000"></path>
-                                </svg>
-                            </div>
-                        </div>
                     </div>
 
                     <div className="flex mt-6">
