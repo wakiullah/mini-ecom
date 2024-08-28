@@ -3,13 +3,11 @@ import Modal from './UI/Modal'
 import UserProgressContex from '../Store/UserProgressContext'
 
 export default function Cart() {
-    const { progress, setCart, hideCart } = useContext(UserProgressContex)
+    const { progress, hideCart } = useContext(UserProgressContex)
     const hideCartPopupHandler = () => {
-        console.log('hide', progress);
 
         hideCart()
     }
-    console.log(progress);
 
     return (
         <Modal open={progress === '' ? false : true}>
