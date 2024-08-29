@@ -1,28 +1,25 @@
-import React, { useEffect, useState } from 'react'
-import Button from './UI/Button'
+import useHttp from '../Hooks/useHttp'
 import MealItem from './MealItem'
 
+const initialObj = {};
+
 export default function Products() {
-    const [items, setItems] = useState([])
+    const { data,
+        isLoading,
+        error
+    } = useHttp('https://dummyjson.com/products', initialObj, [])
 
-    useEffect(() => {
-        async function fetchItems() {
-            const res = await fetch('https://dummyjson.com/products')
-            if (!res.ok) {
-                console.log('error');
+    if (isLoading) {
+        return <p>Loading data!</p>
+    }
 
-            }
-            const data = await res.json()
-            setItems(data.products)
-
-        }
-        fetchItems()
-    }, [])
-
+    if (!data) {
+        return <p>no data</p>
+    }
 
     return (
         <div className='grid grid-cols-3 gap-3 gap-y-10 mt-10'>
-            {items.map((item, i) => (
+            {data.map((item, i) => (
                 <MealItem key={i} item={item} />
             ))}
         </div>

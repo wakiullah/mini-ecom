@@ -30,14 +30,14 @@ const cartReducer = (state, action) => {
     if (action.type === "REMOVE_ITEM") {
         const existingItemIndex = state.items.findIndex(item => item.id === action.id)
         const updatedItems = [...state.items]
+        updatedItems.splice(existingItemIndex, 1)
+        // if (state.items[existingItemIndex].quantity > 1) {
+        //     const existingItem = state.items[existingItemIndex]
+        //     const updatedItem = [{ ...existingItem, quantity: existingItem.quantity - 1 }]
+        //     updatedItem[existingItemIndex] = updatedItem
+        // } else {
 
-        if (state.items[existingItemIndex].quantity > 1) {
-            const existingItem = state.items[existingItemIndex]
-            const updatedItem = [{ ...existingItem, quantity: existingItem.quantity - 1 }]
-            updatedItem[existingItemIndex] = updatedItem
-        } else {
-            updatedItems.splice(existingItemIndex, 1)
-        }
+        // }
         return { ...state, items: updatedItems }
 
     };
@@ -57,7 +57,8 @@ export function CartContextProvider({ children }) {
     }
     const cartContext = {
         items: cart.items,
-        addItem, removeItem
+        addItem,
+        removeItem
     }
     console.log(cartContext);
 

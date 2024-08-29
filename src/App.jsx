@@ -6,6 +6,7 @@ import { CartContextProvider } from './Store/CartContext'
 import Modal from './Components/UI/Modal'
 import { UserProgressContexProvider } from './Store/UserProgressContext'
 import Cart from './Components/Cart'
+import CheckOut from './Components/Checkout'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -16,6 +17,7 @@ function App() {
 
         <div className='max-w-screen-lg m-auto'>
           <Cart />
+          <CheckOut />
           <Header />
           <Products />
         </div>

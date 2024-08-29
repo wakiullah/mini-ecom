@@ -4,16 +4,23 @@ import UserProgressContex from '../Store/UserProgressContext'
 import CartContext from '../Store/CartContext'
 
 export default function Cart() {
-    const { progress, hideCart } = useContext(UserProgressContex)
-    const { items } = useContext(CartContext)
+    const { progress, hideCart, showCheckout } = useContext(UserProgressContex)
+    const { items, removeItem } = useContext(CartContext)
+
+    const totalAmmount = items.reduce((total, item) => total + item.price * item.quantity, 0)
+
 
     const hideCartPopupHandler = () => {
 
         hideCart()
     }
+    console.log(progress);
+    const showCheckoutHandler = () => {
+        showCheckout()
+    }
 
     return (
-        <Modal open={progress === '' ? false : true}>
+        <Modal open={progress === 'Cart' ? true : false}>
             <div
                 className="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]">
                 <div className="w-full max-w-xl bg-white shadow-lg rounded-3xl p-6 relative">
@@ -27,7 +34,7 @@ export default function Cart() {
                             data-original="#000000"></path>
                     </svg>
 
-                    <h4 className="text-base font-bold text-gray-800 mt-6">3 Items</h4>
+                    <h4 className="text-base font-bold text-gray-800 mt-6">{items.length} Items</h4>
 
                     <div className="space-y-4 mt-6">
                         {items.map((item, i) => (
@@ -42,9 +49,9 @@ export default function Cart() {
 
                                 <div className="flex items-center">
                                     <span className="text-base  text-gray-800 mr-4">${item.price}</span>
-                                    <span className="text-base font-bold text-gray-800 mr-4">${item.price * item.quantity}</span>
+                                    <span className="text-base font-bold text-gray-800 mr-4">${(item.price * item.quantity).toFixed(2)}</span>
 
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-[18px] fill-red-500 inline cursor-pointer" viewBox="0 0 24 24">
+                                    <svg onClick={removeItem} xmlns="http://www.w3.org/2000/svg" className="w-[18px] fill-red-500 inline cursor-pointer" viewBox="0 0 24 24">
                                         <path
                                             d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
                                             data-original="#000000"></path>
@@ -59,13 +66,11 @@ export default function Cart() {
 
                     <div className="flex mt-6">
                         <span className="text-base font-bold text-gray-800 flex-1">Total</span>
-                        <span className="text-base font-bold text-gray-800">$170.00</span>
+                        <span className="text-base font-bold text-gray-800">${totalAmmount.toFixed(2)}</span>
                     </div>
 
-                    <div className="flex max-sm:flex-col gap-4 mt-6">
-                        <button type="button" className="text-sm px-5 py-2.5 w-full bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md tracking-wide">Continue
-                            shopping</button>
-                        <button type="button" className="text-sm px-5 py-2.5 w-full bg-blue-600 hover:bg-blue-700 text-white rounded-md tracking-wide">Pay</button>
+                    <div className="flex max-sm:flex-col gap-4 mt-6 i">
+                        <button onClick={showCheckoutHandler} type="button" className="text-sm px-5 w-1/2 py-2.5 ml-auto bg-blue-600 hover:bg-blue-700 text-white rounded-md tracking-wide">Checkout</button>
                     </div>
                 </div>
             </div>
