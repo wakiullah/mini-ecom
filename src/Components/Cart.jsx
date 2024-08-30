@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import Modal from './UI/Modal'
 import UserProgressContex from '../Store/UserProgressContext'
 import CartContext from '../Store/CartContext'

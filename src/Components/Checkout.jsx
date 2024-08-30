@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import  { useContext } from 'react'
 import Modal from './UI/Modal'
 import UserProgressContex from '../Store/UserProgressContext'
 import CartContext from '../Store/CartContext'
@@ -11,7 +11,7 @@ const postMethod = {
 
 export default function CheckOut() {
     const { progress, hideCart, hideCheckout } = useContext(UserProgressContex)
-    const { items, removeItem, clearCart } = useContext(CartContext)
+    const { items, clearCart } = useContext(CartContext)
     const totalAmmount = items.reduce((total, item) => total + item.price * item.quantity, 0)
     const { sentRequest, data, error, isLoading, clearData } = useHttp('https://dummyjson.com/products/add', postMethod)
 
@@ -28,8 +28,10 @@ export default function CheckOut() {
 
     const checkOutSubmitHandler = (e) => {
         e.preventDefault();
+
         const fd = new FormData(e.target)
         const customerData = Object.fromEntries(fd.entries())
+
         sentRequest(JSON.stringify({
             order: {
                 items,
