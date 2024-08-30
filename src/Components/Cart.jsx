@@ -14,7 +14,6 @@ export default function Cart() {
 
         hideCart()
     }
-    console.log(progress);
     const showCheckoutHandler = () => {
         showCheckout()
     }
@@ -69,9 +68,9 @@ export default function Cart() {
                         <span className="text-base font-bold text-gray-800">${totalAmmount.toFixed(2)}</span>
                     </div>
 
-                    <div className="flex max-sm:flex-col gap-4 mt-6 i">
+                    {items.length !== 0 && <div className="flex max-sm:flex-col gap-4 mt-6 i">
                         <button onClick={showCheckoutHandler} type="button" className="text-sm px-5 w-1/2 py-2.5 ml-auto bg-blue-600 hover:bg-blue-700 text-white rounded-md tracking-wide">Checkout</button>
-                    </div>
+                    </div>}
                 </div>
             </div>
 
