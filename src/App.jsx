@@ -9,7 +9,6 @@ import Cart from './Components/Cart'
 import CheckOut from './Components/Checkout'
 
 function App() {
-
   return (
     <UserProgressContexProvider>
       <CartContextProvider>
